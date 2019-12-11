@@ -5,7 +5,7 @@ __all__ = ['Attribute']
 
 
 class Attribute(Base):
-    __tablename = 'food_attribute'
+    __tablename__ = 'food_attribute'
     id = Column(Integer, primary_key=True)
     fdc_id = Column(Integer)
     seq_num = Column(Integer)
