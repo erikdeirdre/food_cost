@@ -1,0 +1,24 @@
+{
+  "food.csv": {
+    "mappings": [
+      "fdc_id",
+      "data_type",
+      "description",
+      "food_category_id",
+      "publication_date"
+    ],
+    "model": "food"
+  },
+  "food_attribute.csv": {
+    "mappings": [
+      "id",
+      "fdc_id",
+      "seq_num",
+      "data_type",
+      "food_attribute_type_id",
+      "name",
+      "value"
+    ],
+    "model": "attribute"
+  }
+}

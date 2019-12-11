@@ -1,0 +1,27 @@
+get_govt_data/*.zip
+get_govt_data/*.csv
+get_govt_data/*.xlsx
+.DS_Store
+.env
+.flaskenv
+*.pyc
+*.pyo
+env/
+env*
+dist/
+build/
+*.egg
+*.egg-info/
+_mailinglist
+.tox/
+.cache/
+.pytest_cache/
+.idea/
+docs/_build/
+app.db
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+*,cover
