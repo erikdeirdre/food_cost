@@ -67,7 +67,7 @@ def load_data(file_name, table_name):
 
 
 url = "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_csv_2019-10-11.zip"
-#download_file(url)
+download_file(url)
 
 with open("convert.json") as json_file:
     mappings = json.load(json_file)
