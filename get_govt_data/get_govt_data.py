@@ -1,16 +1,17 @@
 import urllib3
 import json
 import csv
-from sqlalchemy import create_engine
+import sqlalchemy as sa
 from sqlalchemy.orm import sessionmaker
+import pandas as pd
 from zipfile37 import ZipFile
 import glob
-from classes import (Category, Attribute, Component,
-                    MeasureUnit)
+from database import (Category, Attribute, Component, MeasureUnit)
 from config import Config
 
-engine = create_engine(Config.SQLALCHEMY_DATABASE_URI)
+engine = sa.create_engine(Config.SQLALCHEMY_DATABASE_URI)
 Session = sessionmaker(bind=engine)
+connection = engine.connect()
 
 
 def download_file(url):
@@ -41,48 +42,35 @@ def download_file(url):
     r.release_conn()
 
 
-def process_attribute_file(csv_file, mappings):
-    attribute = Attribute()
-    session = Session()
+def convert_boolean(val):
+    if val.upper() == 'Y' or val.upper() == "YES":
+        return True
 
-    line_count = 0
-    buffer = []
-
-    with open(csv_file) as f:
-        csv_reader = csv.reader(f, delimiter=',')
-        for row in csv_reader:
-            if line_count:
-                buffer.append(
-                    Attribute(
-                        id=row[0],
-                        fdc_id=row[1],
-                        seq_num=row[2],
-                        food_attribute_type_id=row[3],
-                        name=row[4],
-                        value=row[5]
-                    )
-                )
-                if len(buffer) % 10000 == 0:
-                    session.bulk_save_objects(buffer)
-                    buffer = []
-            line_count += 1
-
-        session.bulk_save_objects(buffer)
-
-    print(f'Processed {line_count} lines.')
+    return False
 
 
-def process_files(mapping_file='convert.json'):
-    with open(mapping_file, 'r') as map_file:
-        mappings = json.load(map_file)
+def load_data(file_name, table_name):
+    data = pd.read_csv(file_name, skip_blank_lines=True)
 
-    for file_name in glob.glob('*.csv'):
-        if file_name in mappings:
-            if mappings[file_name]['model'] == 'attribute':
-                process_attribute_file(file_name, mappings[file_name])
+    if 'food_component.csv' not in file_name:
+        data.to_sql(table_name, con=engine, if_exists='replace')
+
+    if 'food_component.csv' in file_name:
+        data['pct_weight'] = pd.to_numeric(
+            data['pct_weight'], errors='coerce'
+        ).fillna(0).astype('float')
+        data['is_refuse'] = data['is_refuse'].apply(convert_boolean)
+        data['min_year_acquired'] = pd.to_numeric(
+            data['min_year_acquired'], errors='coerce'
+        ).fillna(0).astype('int64')
+        data.to_sql(table_name, con=engine, if_exists='replace')
 
 
 url = "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_csv_2019-10-11.zip"
 #download_file(url)
 
-process_files('convert.json')
+with open("convert.json") as json_file:
+    mappings = json.load(json_file)
+    for file_name in glob.glob('*.csv'):
+        if file_name in mappings:
+            load_data(file_name, mappings[file_name]['model'])

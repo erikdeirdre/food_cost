@@ -1,24 +1,32 @@
 {
-  "food.csv": {
-    "mappings": [
-      "fdc_id",
-      "data_type",
-      "description",
-      "food_category_id",
-      "publication_date"
-    ],
-    "model": "food"
-  },
   "food_attribute.csv": {
-    "mappings": [
-      "id",
-      "fdc_id",
-      "seq_num",
-      "data_type",
-      "food_attribute_type_id",
-      "name",
-      "value"
-    ],
     "model": "attribute"
+  },
+  "food_category.csv": {
+    "model": "category"
+  },
+  "food_component.csv": {
+    "model": "component"
+  },
+  "food_nutrient.csv": {
+    "model": "nutrient"
+  },
+  "food_nutrient_conversion_factor.csv": {
+    "model": "nutrient_conversion_factor"
+  },
+  "food_nutrient_derivation.csv": {
+    "model": "nutrient_derivation"
+  },
+  "food_nutrient_source.csv": {
+    "model": "nutrient_source"
+  },
+  "food_portion.csv": {
+    "model": "portion"
+  },
+  "food_portion_conversion_factor.csv": {
+    "model": "portion_conversion_factor"
+  },
+  "wweia_food_category.csv": {
+    "model": "wweia_food_category"
   }
 }
