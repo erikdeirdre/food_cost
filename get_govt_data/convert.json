@@ -1,0 +1,32 @@
+{
+  "food_attribute.csv": {
+    "model": "attribute"
+  },
+  "food_category.csv": {
+    "model": "category"
+  },
+  "food_component.csv": {
+    "model": "component"
+  },
+  "food_nutrient.csv": {
+    "model": "nutrient"
+  },
+  "food_nutrient_conversion_factor.csv": {
+    "model": "nutrient_conversion_factor"
+  },
+  "food_nutrient_derivation.csv": {
+    "model": "nutrient_derivation"
+  },
+  "food_nutrient_source.csv": {
+    "model": "nutrient_source"
+  },
+  "food_portion.csv": {
+    "model": "portion"
+  },
+  "food_portion_conversion_factor.csv": {
+    "model": "portion_conversion_factor"
+  },
+  "wweia_food_category.csv": {
+    "model": "wweia_food_category"
+  }
+}
