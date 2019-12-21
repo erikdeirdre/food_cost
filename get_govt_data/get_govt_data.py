@@ -37,7 +37,7 @@ def download_file(url, dir):
     file_size_dl = 0
     chunk_size = 8192
 
-    with open(file_name, 'wb') as out:
+    with open(os.path.join(dir, file_name), 'wb') as out:
         while True:
             data = r.read(chunk_size)
             file_size_dl += chunk_size
@@ -50,8 +50,8 @@ def download_file(url, dir):
     f.close()
 
     logging.info('Unzipping ... {}'.format(file_name))
-    with ZipFile(file_name, 'r') as zip:
-        zip.extractall()
+    with ZipFile(os.path.join(dir, file_name), 'r') as zip:
+        zip.extractall(dir)
 
     r.release_conn()
 
