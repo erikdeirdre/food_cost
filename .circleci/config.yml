@@ -43,6 +43,7 @@ jobs:
             mkdir -p test-reports/pytest
             coverage report --omit=**site-packages**
             coverage xml -o test-results/pytest/coverage.xml
+            coverage json -o test-results/pytest/coverage.json
 
       - store_test_results:
           path: test-results
