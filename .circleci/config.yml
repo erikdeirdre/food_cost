@@ -41,14 +41,11 @@ jobs:
             . venv/bin/activate
             pip install -r test_requirements.txt
             coverage run -m pytest --junitxml=test-reports/test-results.xml
-            coverage report --omit=**site-packages**,**tests/**
+            coverage report --omit=**site-packages**
             coverage xml -o test-results/coverage.xml
-            coverage html --omit=**site-packages**,**tests/**
+            coverage html --omit=**site-packages**
 
       - store_test_results:
-          path: test-results
-
-      - store_artifacts:
           path: test-results
 
       - store_artifacts:
