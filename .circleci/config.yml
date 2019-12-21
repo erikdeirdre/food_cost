@@ -4,7 +4,8 @@
 #
 version: 2.1
 orbs:
-  coveralls: coveralls/coveralls@1.0.4
+  codecov: codecov/codecov@1.0.2
+
 jobs:
   build:
     docker:
@@ -45,6 +46,7 @@ jobs:
             coverage run -m pytest --junitxml=test-results/test-results.xml
             coverage report
             coverage xml -o test-results/coverage.xml
+            coverage html
 
       - store_test_results:
           path: test-results
@@ -52,7 +54,8 @@ jobs:
       - store_artifacts:
           path: artifacts
 
-      - coveralls/upload
+      - codecov/upload:
+          file: htmlcov
 
 workflows:
   version: 2
