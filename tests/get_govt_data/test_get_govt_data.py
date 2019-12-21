@@ -1,5 +1,5 @@
 import unittest
-from get_govt_data.get_govt_data import convert_boolean
+from get_govt_data.get_govt_data import (convert_boolean)
 
 
 class TestGovtData(unittest.TestCase):

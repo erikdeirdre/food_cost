@@ -88,30 +88,35 @@ def load_data(file_name, table_name):
     logging.debug('Finished posting data to table: {}'.format(table_name))
 
 
-logging.info('Starting ...')
+def main():
+    logging.info('Starting ...')
 
-BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+    BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
-engine = create_engine(Config.SQLALCHEMY_DATABASE_URI)
+    engine = create_engine(Config.SQLALCHEMY_DATABASE_URI)
 
-URL = os.environ.get('GOVT_DATA_URL') or \
-    'https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_csv_2019-12-17.zip'
+    URL = os.environ.get('GOVT_DATA_URL') or \
+        'https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_csv_2019-12-17.zip'
 
-DATA_DIR = os.environ.get('DATA_DIR') or 'data'
-DATA_DIR = os.path.join(BASE_DIR, DATA_DIR)
+    DATA_DIR = os.environ.get('DATA_DIR') or 'data'
+    DATA_DIR = os.path.join(BASE_DIR, DATA_DIR)
 
-CONFIG_FILE = os.environ.get('CONFIG_FILE') or 'convert.json'
-CONFIG_FILE = os.path.join(BASE_DIR, CONFIG_FILE)
+    CONFIG_FILE = os.environ.get('CONFIG_FILE') or 'convert.json'
+    CONFIG_FILE = os.path.join(BASE_DIR, CONFIG_FILE)
 
-download_file(URL, DATA_DIR)
+    download_file(URL, DATA_DIR)
 
-with open(CONFIG_FILE) as json_file:
-    logging.debug('Loading config file: {}'.format(CONFIG_FILE))
-    mappings = json.load(json_file)
-    logging.debug('Finished loading config file: {}'.format(CONFIG_FILE))
+    with open(CONFIG_FILE) as json_file:
+        logging.debug('Loading config file: {}'.format(CONFIG_FILE))
+        mappings = json.load(json_file)
+        logging.debug('Finished loading config file: {}'.format(CONFIG_FILE))
 
-    for file_name in glob.glob(os.path.join(DATA_DIR, '*.csv')):
-        if file_name in mappings:
-            load_data(file_name, mappings[file_name]['model'])
+        for file_name in glob.glob(os.path.join(DATA_DIR, '*.csv')):
+            if file_name in mappings:
+                load_data(file_name, mappings[file_name]['model'])
 
-logging.info('Finished')
+    logging.info('Finished')
+
+
+if __name__ == '__main__':
+    main()
