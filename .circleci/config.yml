@@ -46,7 +46,7 @@ jobs:
             coverage run -m pytest --junitxml=test-results/test-results.xml
             coverage report
             coverage xml -o test-results/coverage.xml
-            coverage html --omit=**lib/python** -o coveralls
+            coverage html --omit=/usr/local/lib*
             coveralls
 
       - store_test_results:
