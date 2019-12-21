@@ -27,6 +27,7 @@ jobs:
           command: |
             python3 -m venv venv
             . venv/bin/activate
+            pip install --upgrade pip
             pip install -r requirements.txt
 
       - save_cache:
@@ -41,7 +42,7 @@ jobs:
             pip install -r test_requirements.txt
             mkdir -p test-reports/pytest
             coverage run -m pytest --junitxml=test-reports/pytest/test-results.xml
-            coverage report --omit=**site-packages**, **tests/**
+            coverage report --omit=**site-packages**,**tests/**
             coverage xml -o test-results/pytest/coverage.xml
 
       - store_test_results:
