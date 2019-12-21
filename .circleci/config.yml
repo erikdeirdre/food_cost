@@ -38,20 +38,12 @@ jobs:
           paths:
             - ./venv
 
-  tests:
-    steps:
       - run:
           name: run tests
           command: |
             . venv/bin/activate
             pip install -r test_requirements.txt
             coverage run -m pytest --junitxml=test-results/test-results.xml
-
-  publish:
-    steps:
-      - run:
-          name: publish results
-          comand: |
             coverage report
             coverage xml -o test-results/coverage.xml
             coverage html --omit=**lib/python** -o coveralls
@@ -71,5 +63,3 @@ workflows:
   workflow:
     jobs:
     - build
-    - tests
-    - publish
