@@ -41,9 +41,10 @@ jobs:
             pip install -r test_requirements.txt
             coverage run -m pytest
             coverage report --omit=**site-packages**
-            coverage xml -o test-results/xml-report
+            coverage xml -o test-results/coverage.xml
 
       - store_test_results:
           path: test-results
+
       - store_artifacts:
           path: artifacts
