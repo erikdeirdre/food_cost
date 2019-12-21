@@ -40,10 +40,10 @@ jobs:
           command: |
             . venv/bin/activate
             pip install -r test_requirements.txt
-            mkdir -p test-reports/pytest
-            coverage run -m pytest --junitxml=test-reports/pytest/test-results.xml
+            coverage run -m pytest --junitxml=test-reports/test-results.xml
             coverage report --omit=**site-packages**,**tests/**
-            coverage xml -o test-results/pytest/coverage.xml
+            coverage xml -o test-results/coverage.xml
+            coverage html --omit=**site-packages**,**tests/**
 
       - store_test_results:
           path: test-results
@@ -53,3 +53,9 @@ jobs:
 
       - store_artifacts:
           path: artifacts
+
+workflows:
+  version: 2
+  workflow:
+    jobs:
+    - build
