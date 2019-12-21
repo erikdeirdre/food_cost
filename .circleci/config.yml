@@ -39,11 +39,10 @@ jobs:
           command: |
             . venv/bin/activate
             pip install -r test_requirements.txt
-            coverage run -m pytest
             mkdir -p test-reports/pytest
-            coverage report --omit=**site-packages**
+            coverage run -m pytest --junitxml=test-reports/pytest/test-results.xml
+            coverage report --omit=**site-packages**, **tests/**
             coverage xml -o test-results/pytest/coverage.xml
-            coverage json -o test-results/pytest/coverage.json
 
       - store_test_results:
           path: test-results
