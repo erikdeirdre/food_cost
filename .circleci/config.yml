@@ -40,7 +40,7 @@ jobs:
           command: |
             . venv/bin/activate
             pip install -r test_requirements.txt
-            coverage run -m pytest --junitxml=test-reports/test-results.xml
+            coverage run -m pytest --junitxml=test-results/test-results.xml
             coverage report --omit=**site-packages**
             coverage xml -o test-results/coverage.xml
             coverage html --omit=**site-packages**
